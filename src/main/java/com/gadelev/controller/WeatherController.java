@@ -35,24 +35,21 @@ public class WeatherController {
     public String getWeatherJson(@RequestParam Optional<String> city, @RequestParam Optional<String> email) throws IOException {
         StringBuilder json = new StringBuilder(service.getByUrl("https://api.openweathermap.org/data/2.5/weather?q="
                 + city.orElse("Kazan") + "&appid=b684cfe1558a37f5cab1c97d60108160"));
-
         if (email.isPresent()) {
             User user = userRepository.findByEmail(email.get());
             if (user == null) {
-              return  "null";
+              return  email.get() + "null";
             }
             Map<String, Object> weatherParse = service.parseGson(json);
-            weatherRepository.save(new Weather(weatherParse.get("description").toString(), weatherParse.get("main humidity").toString(),weatherParse.get("temp").toString(),city.orElse("Kazan"),email.get(), LocalDateTime.now()));
+            weatherRepository.save(new Weather(weatherParse.get("main humidity").toString(),city.orElse("Kazan"),email.get(), LocalDateTime.now()));
         }
-        return email.orElse(null);
+        return email.orElse(null) + "124";
     }
     @GetMapping("/allWeather")
     public List<WeatherDto> getAllWeatherSearch() throws IOException {
         return weatherRepository.findAll().stream().map(weather -> new WeatherDto(
                 weather.getId(),
-                weather.getDescription(),
                 weather.getHumidity(),
-                weather.getTemp(),
                 weather.getCity(),
                 weather.getEmail(),
                 weather.getTime()

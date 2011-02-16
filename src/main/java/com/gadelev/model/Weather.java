@@ -1,10 +1,7 @@
 package com.gadelev.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,11 +10,7 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String description;
-
     private String humidity;
-
-    private String temp;
 
     private String city;
 
@@ -36,13 +29,6 @@ public class Weather {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getHumidity() {
         return humidity;
@@ -52,13 +38,6 @@ public class Weather {
         this.humidity = humidity;
     }
 
-    public String getTemp() {
-        return temp;
-    }
-
-    public void setTemp(String temp) {
-        this.temp = temp;
-    }
 
     public String getCity() {
         return city;
@@ -76,10 +55,8 @@ public class Weather {
         this.email = email;
     }
 
-    public Weather(String description, String humidity, String temp, String city, String email,LocalDateTime time) {
-        this.description = description;
+    public Weather( String humidity,String city,String email,LocalDateTime time) {
         this.humidity = humidity;
-        this.temp = temp;
         this.city = city;
         this.email = email;
         this.time=time;

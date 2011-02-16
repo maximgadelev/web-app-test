@@ -1,7 +1,7 @@
 package com.gadelev.repo;
 
 
-import com.gadelev.dto.UserDto;
+
 import com.gadelev.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
