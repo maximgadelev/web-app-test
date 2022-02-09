@@ -9,7 +9,7 @@ import java.util.Optional;
 @RestController
 public class HelloController {
     Service service = new Service();
-    @GetMapping("/hello")
+    @GetMapping("/find")
     public String hello(@RequestParam Optional<String>city){
         String json = service.getByUrl("https://api.openweathermap.org/data/2.5/weather?q=" + city.orElse("Kazan") + "&appid=b684cfe1558a37f5cab1c97d60108160");
         if(json!=null){
