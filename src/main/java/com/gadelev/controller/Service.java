@@ -1,11 +1,18 @@
 package com.gadelev.controller;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Controller;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-
+@Controller
 public class Service {
     public String getByUrl(String url){
         try {
@@ -26,7 +33,34 @@ public class Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
+    public Map<String, Object> parseGson(StringBuilder jsonString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Map map = mapper.readValue(jsonString.toString(), Map.class);
+        Map<String, Object> mapRes = new HashMap<>();
+
+        for (Object string : map.keySet()) {
+            if (map.get(string).getClass() == LinkedHashMap.class || map.get(string).getClass() == ArrayList.class) {
+                HashMap hashMap = null;
+
+                if (map.get(string).getClass() == LinkedHashMap.class) {
+                    hashMap = (HashMap) map.get(string);
+                } else if (map.get(string).getClass() == ArrayList.class) {
+                    ArrayList arrayList = (ArrayList) map.get(string);
+                    hashMap = (HashMap) arrayList.get(0);
+                }
+
+                for (Object stringHashMap : hashMap.keySet()) {
+                    mapRes.put( string + " " +  stringHashMap, hashMap.get(stringHashMap));
+                }
+
+            } else {
+                mapRes.put((String) string, map.get(string));
+            }
+        }
+        return mapRes;
+    }
+
 }
