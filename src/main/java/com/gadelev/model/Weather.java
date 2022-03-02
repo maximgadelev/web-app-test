@@ -4,15 +4,20 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 
+
 @Entity
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @OneToOne(mappedBy = "weather",cascade = CascadeType.ALL)
+    private Request request;
+
     private String humidity;
 
     private String city;
+
 
     private String email;
 
@@ -20,6 +25,8 @@ public class Weather {
 
     public Weather() {
     }
+
+
 
     public Integer getId() {
         return id;
@@ -55,11 +62,19 @@ public class Weather {
         this.email = email;
     }
 
-    public Weather( String humidity,String city,String email,LocalDateTime time) {
+    public Weather(String humidity, String city, String email, LocalDateTime time) {
         this.humidity = humidity;
         this.city = city;
         this.email = email;
-        this.time=time;
+        this.time = time;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
     public LocalDateTime getTime() {

@@ -2,11 +2,15 @@ package com.gadelev.dto;
 
 import com.gadelev.model.User;
 
+import java.util.List;
+
+
 public class UserDto {
     private Integer id;
     private String name;
     private String email;
     private String password;
+    List<RequestDto> requestDtoList;
 
     public String getPassword() {
         return password;

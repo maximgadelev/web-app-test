@@ -1,6 +1,7 @@
 package com.gadelev.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,6 +12,10 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Request> requests;
 
     public User() {}
 
