@@ -8,5 +8,5 @@ import java.util.List;
 public interface RequestService {
     List<RequestDto> findAllByUserId(Integer userId);
     List<RequestDto> findAllCity(String city);
-    Request save(Request request);
+    RequestDto save(Request request);
 }

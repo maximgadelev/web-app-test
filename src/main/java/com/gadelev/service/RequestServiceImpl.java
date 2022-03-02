@@ -4,10 +4,11 @@ import com.gadelev.dto.RequestDto;
 import com.gadelev.model.Request;
 import com.gadelev.repo.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class RequestServiceImpl implements RequestService {
     private final RequestRepository requestRepository;
 
@@ -15,6 +16,8 @@ public class RequestServiceImpl implements RequestService {
     public RequestServiceImpl(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
     }
+
+
 
 
     @Override
@@ -28,7 +31,8 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request save(Request request) {
-        return requestRepository.save(request);
+    public RequestDto save(Request request) {
+       return RequestDto.fromModel(request);
     }
+
 }

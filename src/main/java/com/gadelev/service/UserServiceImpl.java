@@ -6,10 +6,11 @@ import com.gadelev.dto.UserDto;
 import com.gadelev.model.User;
 import com.gadelev.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
