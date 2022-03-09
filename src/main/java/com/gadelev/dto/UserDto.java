@@ -51,6 +51,14 @@ public class UserDto {
         this.password = password;
     }
 
+    public List<RequestDto> getRequestDtoList() {
+        return requestDtoList;
+    }
+
+    public void setRequestDtoList(List<RequestDto> requestDtoList) {
+        this.requestDtoList = requestDtoList;
+    }
+
     public static UserDto fromModel(User user) {
         return new UserDto(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }

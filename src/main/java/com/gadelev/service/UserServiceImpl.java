@@ -1,11 +1,11 @@
 package com.gadelev.service;
 
-import com.gadelev.PasswordHelper;
 import com.gadelev.dto.CreateUserDto;
 import com.gadelev.dto.UserDto;
 import com.gadelev.model.User;
 import com.gadelev.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +14,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
+    private final BCryptPasswordEncoder encoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
 
@@ -32,9 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(CreateUserDto user) {
-        return UserDto.fromModel(userRepository.save(new User(user.getName(), user.getEmail(),
-                PasswordHelper.encrypt(user.getPassword()))));
+    public UserDto save(CreateUserDto createUserDto) {
+        User user = new User(createUserDto.getName(), createUserDto.getEmail());
+        user.setPassword(encoder.encode(createUserDto.getPassword()));
+        return UserDto.fromModel(userRepository.save(user));
     }
 
     @Override
