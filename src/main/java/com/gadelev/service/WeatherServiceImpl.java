@@ -27,7 +27,6 @@ public class WeatherServiceImpl implements WeatherService{
                 weather.getId(),
                 weather.getHumidity(),
                 weather.getCity(),
-                weather.getEmail(),
                 weather.getTime()
         )).collect(Collectors.toList());
     }

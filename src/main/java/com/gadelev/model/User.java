@@ -17,7 +17,6 @@ public class User {
     @Size(min = 8, max = 64, message = "Password should contains from 8 to 64 symbols")
     @Column(nullable = false, length = 64)
     private String password;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -25,12 +24,43 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
-
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Request> requests;
+@Column
+    private boolean enabled;
+
+    @Column(length = 64)
+    private String verificationCode;
 
     public User() {}
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public User(String name, String email,  String verificationCode, String password) {
+        this.name = name;
+        this.email = email;
+        this.verificationCode = verificationCode;
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -64,19 +94,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
     public Set<Role> getRoles() {
         return roles;
-    }
-
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
     }
 
     public void setRoles(Set<Role> roles) {

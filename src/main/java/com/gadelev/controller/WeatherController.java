@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,17 +37,17 @@ public class WeatherController {
         this.service = service;
     }
     @GetMapping("/weather")
-    public String getWeatherJson(@RequestParam Optional<String> city, @RequestParam Optional<String> email) throws IOException {
+    public String getWeatherJson(@RequestParam Optional<String> city, HttpServletRequest httpServletRequest) throws IOException {
         StringBuilder json = new StringBuilder(service.getByUrl("https://api.openweathermap.org/data/2.5/weather?q="
                 + city.orElse("Kazan") + "&appid=b684cfe1558a37f5cab1c97d60108160"));
-
-        if (email.isPresent()) {
-            User user = userRepository.findByEmail(email.get());
+        String currentPrincipalName = httpServletRequest.getUserPrincipal().getName();
+        if (currentPrincipalName!=null) {
+            User user = userRepository.findByEmail(currentPrincipalName);
             if (user == null) {
-              return  email.get() + "null";
+              return  currentPrincipalName + "null";
             }
             Map<String, Object> weatherParse = service.parseGson(json);
-            Weather weather = new Weather(weatherParse.get("main humidity").toString(),city.orElse("Kazan"),email.get(), LocalDateTime.now());
+            Weather weather = new Weather(weatherParse.get("main humidity").toString(),city.orElse("Kazan"),currentPrincipalName, LocalDateTime.now());
             Request request = new Request(city.orElse("Kazan"),weather,user);
             requestService.save(request);
         }

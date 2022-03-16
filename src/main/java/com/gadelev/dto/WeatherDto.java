@@ -10,9 +10,16 @@ public class WeatherDto {
     private String humidity;
 
     private String city;
-    private String email;
+
 
     private LocalDateTime time;
+
+    public WeatherDto(Integer id, String humidity, String city, LocalDateTime time) {
+        this.id = id;
+        this.humidity = humidity;
+        this.city = city;
+        this.time = time;
+    }
 
     public Integer getId() {
         return id;
@@ -38,14 +45,6 @@ public class WeatherDto {
         this.city = city;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public LocalDateTime getTime() {
         return time;
     }
@@ -54,15 +53,9 @@ public class WeatherDto {
         this.time = time;
     }
 
-    public WeatherDto(Integer id, String humidity, String city, String email, LocalDateTime time) {
-        this.id = id;
-        this.humidity = humidity;
-        this.city = city;
-        this.email = email;
-        this.time = time;
-    }
+
 
     public static WeatherDto fromModel(Weather weather) {
-        return new WeatherDto(weather.getId(), weather.getHumidity(), weather.getCity(), weather.getEmail(), weather.getTime());
+        return new WeatherDto(weather.getId(), weather.getHumidity(), weather.getCity(), weather.getTime());
     }
 }

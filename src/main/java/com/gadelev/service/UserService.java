@@ -12,4 +12,8 @@ public interface UserService {
 
     UserDto save(CreateUserDto user);
     UserDto findByEmail(String email);
+    boolean verify(String verificationCode);
+
+    UserDto signUp(CreateUserDto createUserDto, String url);
+    void sendVerificationMail(String mail, String name, String code, String url);
 }

@@ -32,7 +32,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestDto save(Request request) {
-       return RequestDto.fromModel(request);
+       return RequestDto.fromModel(requestRepository.save(request));
     }
 
 }
