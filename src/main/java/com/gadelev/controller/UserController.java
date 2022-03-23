@@ -49,11 +49,12 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public String verify(@Param("code") String code) {
+    @ResponseBody
+    public String verification(@Param("code") String code) {
         if (userService.verify(code)) {
-            return "verification_success";
+            return "verification_success1";
         } else {
-            return "verification_failed";
+            return "verification_failed1";
         }
     }
 }

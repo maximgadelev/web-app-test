@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="Максим (generated)" id="1648025695694-1">
+        <createTable tableName="request">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="request_pkey"/>
+            </column>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="user_id" type="INTEGER"/>
+            <column name="weather_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-2">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="roles_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-3">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="hibernate_sequence" startValue="1"/>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-4">
+        <createTable tableName="user_role">
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+            <column name="role_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-5">
+        <createTable tableName="users">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="verification_code" type="VARCHAR(64)"/>
+            <column name="enabled" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-6">
+        <createTable tableName="weather">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="weather_pkey"/>
+            </column>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="humidity" type="VARCHAR(255)"/>
+            <column name="time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-7">
+        <addForeignKeyConstraint baseColumnNames="weather_id" baseTableName="request" constraintName="fkdklpgth4jj18vdyv4e1vm2s4n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="weather" validate="true"/>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-8">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="request" constraintName="fkg03bldv86pfuboqfefx48p6u3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-9">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="fkj345gk1bovqvfame88rcx7yyx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="Максим (generated)" id="1648025695694-10">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="fkt7e7djp752sqn6w22i6ocqy6q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="roles" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
