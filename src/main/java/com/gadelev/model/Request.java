@@ -50,4 +50,12 @@ public class Request {
     public void setWeather(Weather weather) {
         this.weather = weather;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

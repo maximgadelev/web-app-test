@@ -11,16 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+
 
 
 @Controller
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
     @Autowired
-    public UserController( UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -36,11 +36,7 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping("/user")
-    @ResponseBody
-    public UserDto createUser(@Valid @RequestBody CreateUserDto user) {
-        return userService.save(user);
-    }
+
     @PostMapping("/sign_up")
     public String signUp(@ModelAttribute(name = "user") CreateUserDto userDto, HttpServletRequest request) {
         String url = request.getRequestURL().toString().replace(request.getServletPath(), "");

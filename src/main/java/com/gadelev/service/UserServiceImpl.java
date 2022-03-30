@@ -43,17 +43,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).stream().map(UserDto::fromModel).findFirst().orElse(null);
     }
 
-    @Override
-    public UserDto save(CreateUserDto createUserDto) {
-        User user = new User(createUserDto.getName(), createUserDto.getEmail());
-        user.setPassword(encoder.encode(createUserDto.getPassword()));
-        return UserDto.fromModel(userRepository.save(user));
-    }
 
-    @Override
-    public UserDto findByEmail(String email) {
-       return  UserDto.fromModel(userRepository.findByEmail(email));
-    }
+
+
 
     @Override
     public boolean verify(String verificationCode) {

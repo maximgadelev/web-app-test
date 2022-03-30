@@ -8,6 +8,7 @@ import com.gadelev.repo.UserRepository;
 import com.gadelev.service.RequestService;
 import com.gadelev.service.UserService;
 import com.gadelev.service.WeatherService;
+import com.gadelev.utils.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,18 +24,18 @@ import java.util.Optional;
 
 @RestController
 public class WeatherController {
-    private final Service service;
+    private final Service service = new Service();
     private final WeatherService weatherService;
     private final RequestService requestService;
     private final UserRepository userRepository;
 
     @Autowired
-    public WeatherController(Service service,
+    public WeatherController(
                              WeatherService weatherService, RequestService requestService, UserService userService, UserRepository userRepository) {
         this.weatherService = weatherService;
         this.requestService = requestService;
         this.userRepository = userRepository;
-        this.service = service;
+
     }
     @GetMapping("/weather")
     public String getWeatherJson(@RequestParam Optional<String> city, HttpServletRequest httpServletRequest) throws IOException {

@@ -10,8 +10,7 @@ public interface UserService {
 
     UserDto findById(Integer id);
 
-    UserDto save(CreateUserDto user);
-    UserDto findByEmail(String email);
+
     boolean verify(String verificationCode);
 
     UserDto signUp(CreateUserDto createUserDto, String url);

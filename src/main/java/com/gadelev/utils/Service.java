@@ -1,4 +1,4 @@
-package com.gadelev.controller;
+package com.gadelev.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 
