@@ -16,6 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -74,5 +78,23 @@ public class UserControllerUnitTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("name").value("testName"));
     }
+@Test
+    public void testSignUp() throws Exception{
+    CreateUserDto createUserDto = new CreateUserDto();
+    createUserDto.setName("Maxim");
+    createUserDto.setPassword("testPassword");
+    createUserDto.setEmail("gadelev@mail.ru");
 
+    given(userService.signUp(any(CreateUserDto.class), anyString()))
+            .willReturn(new UserDto(1, "Maxim", "gadelev@mail.ru", "testPassword"));
+    mockMvc.perform(post("/sign_up")
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .flashAttr("user", createUserDto)
+            )
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+            .andExpect(view().name("sign_up_success"));
+
+}
 }

@@ -25,6 +25,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(WeatherController.class)
 public class WeatherControllerUnitTest {
@@ -52,6 +54,7 @@ public class WeatherControllerUnitTest {
 
     @MockBean
     private BCryptPasswordEncoder encoder;
+
     @Before
     public void init() {
         Weather weather = new Weather();
@@ -66,6 +69,7 @@ public class WeatherControllerUnitTest {
                 WeatherDto.fromModel(weather2)));
         given(weatherService.getAllByCity("Moscow")).willReturn(Arrays.asList(WeatherDto.fromModel(weather2)));
     }
+
     @Test
     public void testGetAll() throws Exception {
         mockMvc.perform(get("/allWeather")
@@ -75,10 +79,12 @@ public class WeatherControllerUnitTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].city").value("Kazan"));
     }
+
     @Test
     public void testGetWeatherByCity() throws Exception {
         mockMvc.perform(get("/weather/city/Moscow")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(httpBasic("minnibaeva.02@gmail.com", "12345678")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))

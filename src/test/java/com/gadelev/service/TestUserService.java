@@ -72,4 +72,9 @@ public class TestUserService {
         Assert.assertTrue(userService.verify("11112"));
         Assert.assertFalse(userService.verify("1111"));
     }
+    @Test
+    public void testSignUp() {
+        Assert.assertTrue(userService.getAll().isEmpty());
+    }
+
 }
