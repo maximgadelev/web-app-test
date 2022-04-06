@@ -1,5 +1,6 @@
 package com.gadelev.controller;
 
+import com.gadelev.aspect.Loggable;
 import com.gadelev.dto.RequestDto;
 import com.gadelev.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ public class RequestController {
     }
 
 
-
+    @Loggable
     @GetMapping("/city/{city}")
     public Iterable<RequestDto>  getAllByCity(@PathVariable String city){
         return requestService.findAllCity(city);
     }
+    @Loggable
     @GetMapping("/request/{id}")
     public List<RequestDto> getAllById(@PathVariable Integer id){
        return requestService.findAllByUserId(id);
