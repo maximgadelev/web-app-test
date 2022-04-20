@@ -33,6 +33,9 @@ dependencies {
     liquibaseRuntime('org.liquibase:liquibase-core:4.9.0')
     liquibaseRuntime('org.postgresql:postgresql:42.3.3')
     implementation 'org.testng:testng:7.3.0'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.7'
 
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
     testImplementation "com.h2database:h2:1.4.200"

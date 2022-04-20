@@ -1,6 +1,5 @@
 package com.gadelev.controller;
 
-import com.gadelev.aspect.Loggable;
 import com.gadelev.dto.WeatherDto;
 import com.gadelev.model.Request;
 import com.gadelev.model.User;
@@ -10,6 +9,10 @@ import com.gadelev.service.RequestService;
 import com.gadelev.service.UserService;
 import com.gadelev.service.WeatherService;
 import com.gadelev.utils.Service;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +42,9 @@ public class WeatherController {
 
     }
 
+    @Operation(summary = "Weather json by city")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather was get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/weather")
     public String getWeatherJson(@RequestParam Optional<String> city, HttpServletRequest httpServletRequest) throws IOException {
         StringBuilder json = new StringBuilder(service.getByUrl("https://api.openweathermap.org/data/2.5/weather?q="
@@ -57,11 +63,17 @@ public class WeatherController {
         return json.toString();
     }
 
+    @Operation(summary = "Returns all weather history")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather was get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/allWeather")
     public List<WeatherDto> getAllWeatherSearch() throws IOException {
         return weatherService.findAll();
     }
 
+    @Operation(summary = "Returns all weather history by city")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Weather was get",
+            content = {@Content(mediaType = "application/json")})})
     @GetMapping("/weather/city/{city}")
     public Iterable<WeatherDto> getAllWeatherByCity(@PathVariable String city) {
         return weatherService.getAllByCity(city);
